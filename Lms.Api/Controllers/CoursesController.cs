@@ -255,6 +255,17 @@ namespace Lms.Api.Controllers
         /// Om ModelState ej är valid returneras BadRequest = 400.
         /// Om det inte gick att uppdatera course returneras StatusCode = 500
         /// </returns>
+        /// <remarks>
+        /// Sample request. Uppdaterar Titel med value \
+        /// PATCH /api/Courses/16 \
+        /// [ \
+        ///    { \
+        ///         "op": "replace", \
+        ///         "path": "/Title", \
+        ///         "value": "Dude new title" \
+        ///     } \
+        /// ]
+        /// </remarks>
         [HttpPatch("{courseId}")]
         public async Task<ActionResult<CourseDto>> PatchCourse(int courseId, JsonPatchDocument<CourseDto> patchDocument)
         {

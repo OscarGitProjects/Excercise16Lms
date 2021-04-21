@@ -33,13 +33,34 @@ namespace Lms.Api
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Lms.Api", Version = "1.0" });
+                c.SwaggerDoc("v1", 
+                    new OpenApiInfo 
+                    { 
+                        Title = "Lms.Api", 
+                        Version = "1.0", 
+                        Description = "Uppgift 16. Lmi",
+                        Contact = new Microsoft.OpenApi.Models.OpenApiContact()
+                        {
+                            Email = "oscarandersson2@hotmail.com",
+                            Name = "Oscar Andersson",
+                            Url = new Uri("https://www.microsoft.com")
+                        },
+                        License = new Microsoft.OpenApi.Models.OpenApiLicense()
+                        {
+                            Name = "My licens",
+                            Url = new Uri("https://www.microsoft.com")
+                        }
+                    });
 
                 // Get the xml comments file
-                var xmlCommentsFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                var xmlCommentFullPath = Path.Combine(AppContext.BaseDirectory, xmlCommentsFile);
+                var xmlCommentsFileApi = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlCommentFullPathApi = Path.Combine(AppContext.BaseDirectory, xmlCommentsFileApi);
+                var xmlCommentFullPathCore = Path.Combine(AppContext.BaseDirectory, "Lms.Core.xml");
+                var xmlCommentFullPathData = Path.Combine(AppContext.BaseDirectory, "Lms.Data.xml");
 
-                c.IncludeXmlComments(xmlCommentFullPath);
+                c.IncludeXmlComments(xmlCommentFullPathApi);
+                c.IncludeXmlComments(xmlCommentFullPathCore);
+                c.IncludeXmlComments(xmlCommentFullPathData);
             });
 
             services.AddDbContext<ApplicationDbContext>(options => 
