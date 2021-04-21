@@ -9,6 +9,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System;
+using System.IO;
+using System.Reflection;
 
 namespace Lms.Api
 {
@@ -30,7 +33,13 @@ namespace Lms.Api
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Lms.Api", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Lms.Api", Version = "1.0" });
+
+                // Get the xml comments file
+                var xmlCommentsFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlCommentFullPath = Path.Combine(AppContext.BaseDirectory, xmlCommentsFile);
+
+                c.IncludeXmlComments(xmlCommentFullPath);
             });
 
             services.AddDbContext<ApplicationDbContext>(options => 
@@ -41,6 +50,16 @@ namespace Lms.Api
             services.AddAutoMapper(typeof(MapperProfile));
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            //services.AddSwaggerGen(setUpAction => 
+            //{
+            //    setUpAction.SwaggerDoc("LibraryOpenAPISpecification", new Microsoft.OpenApi.Models.OpenApiInfo()
+            //    { 
+            //        Title = "LMS API",
+            //        Version = "1.0",
+            //        Description = "LMS API"
+            //    });
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,7 +69,7 @@ namespace Lms.Api
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Lms.Api v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Lms.Api v1.0"));
             }
             else
             {
@@ -66,6 +85,14 @@ namespace Lms.Api
             }
 
             app.UseHttpsRedirection();
+
+            //app.UseSwagger();
+
+            //app.UseSwaggerUI(setUpAction => 
+            //{
+            //    setUpAction.SwaggerEndpoint("/swagger/LibraryOpenAPISpecification/swagger.json", "LMS Api");
+            //    setUpAction.RoutePrefix = "";
+            //});
 
             app.UseRouting();
 

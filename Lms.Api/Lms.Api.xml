@@ -1,0 +1,163 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Lms.Api</name>
+    </assembly>
+    <members>
+        <member name="M:Lms.Api.Controllers.CoursesController.#ctor(Lms.Core.Repositories.IUnitOfWork,AutoMapper.IMapper)">
+            <summary>
+            Konstruktor
+            </summary>
+            <param name="uow">Unit of work. Används för att anropa olika Repository</param>
+            <param name="mapper">Automapper</param>
+        </member>
+        <member name="M:Lms.Api.Controllers.CoursesController.GetCourses(System.Boolean)">
+            <summary>
+            Get alla courses
+            </summary>
+            <param name="includeModules">true om courses även skall innehålla modules. Annars false. Default false</param>
+            <returns>Ok = 200 och en lista med courses</returns>
+        </member>
+        <member name="M:Lms.Api.Controllers.CoursesController.GetCourse(System.Int32)">
+            <summary>
+            GET: api/Courses/5
+            Get sökt course
+            </summary>
+            <param name="id">id för sökt course</param>
+            <returns>Ok = 200 och sökt course eller NotFound = 404</returns>
+        </member>
+        <member name="M:Lms.Api.Controllers.CoursesController.PutCourseAsync(System.Int32,Lms.Core.Dto.CourseDto)">
+            <summary>
+            PUT: api/Courses/5
+            To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+            Put, update/replace, course
+            </summary>
+            <param name="id">id för den course som skall uppdateras</param>
+            <param name="courseDto">Information om course som skall uppdateras</param>
+            <returns>Om det gick bra returneras Ok = 200. 
+            Om id och coursedto ej har samma id returneras BadRequest = 400. 
+            Om ModelState ej är valid returneras BadRequest = 400.
+            Om course som skall uppdateras inte finns returneras NotFound = 404.
+            Om det inte gick uppdatera course returneras StatusCode = 500
+            </returns>
+        </member>
+        <member name="M:Lms.Api.Controllers.CoursesController.PostCourse(Lms.Core.Dto.CourseDto)">
+            <summary>
+            POST: api/Courses
+            To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+            Post, create, ny course
+            </summary>
+            <param name="courseDto">Information om course som skall skapas</param>
+            <returns>Om det gick bra sker det en redirect till GetCourse action.
+            Om ModelState ej är valid returneras BadRequest = 400.
+            Om det inte gick att skapa course returneras StatusCode = 500
+            </returns>
+        </member>
+        <member name="M:Lms.Api.Controllers.CoursesController.DeleteCourse(System.Int32)">
+            <summary>
+            DELETE: api/Courses/5
+            Delete, radera, course
+            </summary>
+            <param name="id">id för den course som skall raderas</param>
+            <returns>Om det gick bra returneras Ok = 200. 
+            Om course som skall raderas inte finns returneras NotFound = 404.
+            Om det inte gick att skapa course returneras StatusCode = 500.
+            </returns>
+        </member>
+        <member name="M:Lms.Api.Controllers.CoursesController.CourseExistsAsync(System.Int32)">
+            <summary>
+            Metoden testar om en course finns
+            </summary>
+            <param name="id">id för sökt course</param>
+            <returns>true om sökt course finns. Annars returneras false</returns>
+        </member>
+        <member name="M:Lms.Api.Controllers.CoursesController.PatchCourse(System.Int32,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument{Lms.Core.Dto.CourseDto})">
+            <summary>
+            Patch, update/modify, course
+            </summary>
+            <param name="courseId">id för course som skall uppdateras</param>
+            <param name="patchDocument"></param>
+            <returns>Om det gick bra returneras Ok = 200 och information om course.
+            Om course inte finns returneras NotFound = 404.
+            Om ModelState ej är valid returneras BadRequest = 400.
+            Om det inte gick att uppdatera course returneras StatusCode = 500
+            </returns>
+        </member>
+        <member name="M:Lms.Api.Controllers.ModulesController.#ctor(Lms.Core.Repositories.IUnitOfWork,AutoMapper.IMapper)">
+            <summary>
+            Konstruktor
+            </summary>
+            <param name="uow">Unit of work. Används för att anropa olika Repository</param>
+            <param name="mapper">Automapper</param>
+        </member>
+        <member name="M:Lms.Api.Controllers.ModulesController.GetModules">
+            <summary>
+            GET: api/Modules
+            Get alla modules
+            </summary>
+            <returns>Ok = 200 och en lista med modules</returns>
+        </member>
+        <member name="M:Lms.Api.Controllers.ModulesController.GetModuleById(System.Int32)">
+            <summary>
+            GET: api/Modules/5
+            Get sökt module
+            </summary>
+            <param name="id">id för sökt module</param>
+            <returns>Ok = 200 och sökt module eller NotFound = 404</returns>
+        </member>
+        <member name="M:Lms.Api.Controllers.ModulesController.GetModule(System.String)">
+            <summary>
+            GET: api/Modules/title
+            Get sökt module på titel
+            </summary>
+            <param name="title">titel för sökt module</param>
+            <returns>Ok = 200 och sökt module eller NotFound = 404</returns>
+        </member>
+        <member name="M:Lms.Api.Controllers.ModulesController.PutModule(System.Int32,Lms.Core.Dto.ModuleDto)">
+            <summary>
+            
+            PUT: api/Modules/5
+            To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+            Put, update/replace, module
+            </summary>
+            <param name="id">id för den module som skall uppdateras</param>
+            <param name="moduleDto">Information om den module som skall uppdateras</param>
+            <returns>Om det gick bra returneras Ok = 200. 
+            Om id och moduledto ej har samma id returneras BadRequest = 400. 
+            Om ModelState ej är valid returneras BadRequest = 400.
+            Om module som skall uppdateras inte finns returneras NotFound = 404.
+            Om det inte gick uppdatera module returneras StatusCode = 500.
+            </returns>
+        </member>
+        <member name="M:Lms.Api.Controllers.ModulesController.PostModule(Lms.Core.Dto.ModuleDto)">
+            <summary> 
+            POST: api/Modules
+            To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+            Post, create, ny module
+            </summary>
+            <param name="moduleDto">Information om den module som skall skapas</param>
+            <returns>Om det gick bra sker det en redirect till GetModule action.
+            Om ModelState ej är valid returneras BadRequest = 400.
+            Om det inte gick att skapa module returneras StatusCode = 500
+            </returns>
+        </member>
+        <member name="M:Lms.Api.Controllers.ModulesController.DeleteModule(System.Int32)">
+            <summary>
+            DELETE: api/Modules/5
+            DELETE, radera, en module
+            </summary>
+            <param name="id">id för den module som skall raderas</param>
+            <returns>Om det gick radera module returneras Ok = 200.
+            Om module inte finns returneras NotFound = 404.
+            Om det inte gick att radera module returneras StatusCode = 500.
+            </returns>
+        </member>
+        <member name="M:Lms.Api.Controllers.ModulesController.ModuleExists(System.Int32)">
+            <summary>
+            Metoden testar om en module finns
+            </summary>
+            <param name="id">id för sökt module</param>
+            <returns>true om sökt module finns. Annars returneras false</returns>
+        </member>
+    </members>
+</doc>

@@ -20,6 +20,12 @@ namespace Lms.Api.Controllers
         private readonly IMapper m_Mapper;
 
         //public CoursesController(ApplicationDbContext context, IUnitOfWork uow)
+
+        /// <summary>
+        /// Konstruktor
+        /// </summary>
+        /// <param name="uow">Unit of work. Används för att anropa olika Repository</param>
+        /// <param name="mapper">Automapper</param>
         public CoursesController(IUnitOfWork uow, IMapper mapper)
         {
             //_context = context;
@@ -49,6 +55,11 @@ namespace Lms.Api.Controllers
         //    return Ok(lsCourses);
         //}
 
+        /// <summary>
+        /// Get alla courses
+        /// </summary>
+        /// <param name="includeModules">true om courses även skall innehålla modules. Annars false. Default false</param>
+        /// <returns>Ok = 200 och en lista med courses</returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CourseDto>>> GetCourses([FromQuery]bool includeModules = false)
         {
@@ -71,7 +82,12 @@ namespace Lms.Api.Controllers
         }
 
 
-        // GET: api/Courses/5
+        /// <summary>
+        /// GET: api/Courses/5
+        /// Get sökt course
+        /// </summary>
+        /// <param name="id">id för sökt course</param>
+        /// <returns>Ok = 200 och sökt course eller NotFound = 404</returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<CourseDto>> GetCourse(int id)
         {
@@ -91,8 +107,19 @@ namespace Lms.Api.Controllers
             return Ok(dto);
         }
 
-        // PUT: api/Courses/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// PUT: api/Courses/5
+        /// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// Put, update/replace, course
+        /// </summary>
+        /// <param name="id">id för den course som skall uppdateras</param>
+        /// <param name="courseDto">Information om course som skall uppdateras</param>
+        /// <returns>Om det gick bra returneras Ok = 200. 
+        /// Om id och coursedto ej har samma id returneras BadRequest = 400. 
+        /// Om ModelState ej är valid returneras BadRequest = 400.
+        /// Om course som skall uppdateras inte finns returneras NotFound = 404.
+        /// Om det inte gick uppdatera course returneras StatusCode = 500
+        /// </returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCourseAsync(int id, CourseDto courseDto)
         {
@@ -134,8 +161,17 @@ namespace Lms.Api.Controllers
             return Ok();
         }
 
-        // POST: api/Courses
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+
+        /// <summary>
+        /// POST: api/Courses
+        /// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// Post, create, ny course
+        /// </summary>
+        /// <param name="courseDto">Information om course som skall skapas</param>
+        /// <returns>Om det gick bra sker det en redirect till GetCourse action.
+        /// Om ModelState ej är valid returneras BadRequest = 400.
+        /// Om det inte gick att skapa course returneras StatusCode = 500
+        /// </returns>
         [HttpPost]
         public async Task<ActionResult<CourseDto>> PostCourse(CourseDto courseDto)
         {
@@ -158,7 +194,16 @@ namespace Lms.Api.Controllers
             return CreatedAtAction("GetCourse", new { id = courseDto.CourseId }, courseDto);
         }
 
-        // DELETE: api/Courses/5
+
+        /// <summary>
+        /// DELETE: api/Courses/5
+        /// Delete, radera, course
+        /// </summary>
+        /// <param name="id">id för den course som skall raderas</param>
+        /// <returns>Om det gick bra returneras Ok = 200. 
+        /// Om course som skall raderas inte finns returneras NotFound = 404.
+        /// Om det inte gick att skapa course returneras StatusCode = 500.
+        /// </returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCourse(int id)
         {
@@ -181,6 +226,12 @@ namespace Lms.Api.Controllers
             return Ok();
         }
 
+
+        /// <summary>
+        /// Metoden testar om en course finns
+        /// </summary>
+        /// <param name="id">id för sökt course</param>
+        /// <returns>true om sökt course finns. Annars returneras false</returns>
         private async Task<bool> CourseExistsAsync(int id)
         {
             bool bCourseExists = true;
@@ -193,6 +244,17 @@ namespace Lms.Api.Controllers
             return bCourseExists;
         }
 
+
+        /// <summary>
+        /// Patch, update/modify, course
+        /// </summary>
+        /// <param name="courseId">id för course som skall uppdateras</param>
+        /// <param name="patchDocument"></param>
+        /// <returns>Om det gick bra returneras Ok = 200 och information om course.
+        /// Om course inte finns returneras NotFound = 404.
+        /// Om ModelState ej är valid returneras BadRequest = 400.
+        /// Om det inte gick att uppdatera course returneras StatusCode = 500
+        /// </returns>
         [HttpPatch("{courseId}")]
         public async Task<ActionResult<CourseDto>> PatchCourse(int courseId, JsonPatchDocument<CourseDto> patchDocument)
         {

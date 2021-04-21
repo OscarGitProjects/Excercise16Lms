@@ -8,8 +8,16 @@ using System.Threading.Tasks;
 
 namespace Lms.Data.Data
 {
+    /// <summary>
+    /// Klass för seed av data till databasen
+    /// </summary>
     public class SeedData
     {
+        /// <summary>
+        /// Metoden seed data om course och models till databasen
+        /// </summary>
+        /// <param name="services"></param>
+        /// <returns></returns>
         public static async Task InitSeedAsync(IServiceProvider services)
         {
             using (var context = new ApplicationDbContext(services.GetRequiredService<DbContextOptions<ApplicationDbContext>>()))

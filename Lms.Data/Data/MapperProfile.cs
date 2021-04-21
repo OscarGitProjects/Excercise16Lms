@@ -4,6 +4,9 @@ using Lms.Core.Models.Entities;
 
 namespace Lms.Data.Data
 {
+    /// <summary>
+    /// Automapper konfiguration
+    /// </summary>
     public class MapperProfile : Profile
     {
         /// <summary>

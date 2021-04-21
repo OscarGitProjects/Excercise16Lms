@@ -19,6 +19,12 @@ namespace Lms.Api.Controllers
         private readonly IMapper m_Mapper;
 
         //public ModulesController(ApplicationDbContext context)
+
+        /// <summary>
+        /// Konstruktor
+        /// </summary>
+        /// <param name="uow">Unit of work. Används för att anropa olika Repository</param>
+        /// <param name="mapper">Automapper</param>
         public ModulesController(IUnitOfWork uow, IMapper mapper)
         {
             //_context = context;
@@ -26,7 +32,12 @@ namespace Lms.Api.Controllers
             this.m_Mapper = mapper;
         }
 
-        // GET: api/Modules
+
+        /// <summary>
+        /// GET: api/Modules
+        /// Get alla modules
+        /// </summary>
+        /// <returns>Ok = 200 och en lista med modules</returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ModuleDto>>> GetModules()
         {
@@ -49,7 +60,13 @@ namespace Lms.Api.Controllers
             return Ok(lsModules);
         }
 
-        // GET: api/Modules/5
+
+        /// <summary>
+        /// GET: api/Modules/5
+        /// Get sökt module
+        /// </summary>
+        /// <param name="id">id för sökt module</param>
+        /// <returns>Ok = 200 och sökt module eller NotFound = 404</returns>
         [HttpGet("{id:int}")]
         public async Task<ActionResult<ModuleDto>> GetModuleById(int id)
         {
@@ -70,6 +87,12 @@ namespace Lms.Api.Controllers
         }
 
 
+        /// <summary>
+        /// GET: api/Modules/title
+        /// Get sökt module på titel
+        /// </summary>
+        /// <param name="title">titel för sökt module</param>
+        /// <returns>Ok = 200 och sökt module eller NotFound = 404</returns>
         [HttpGet("{title}")]
         public async Task<ActionResult<ModuleDto>> GetModule(string title)
         {
@@ -89,8 +112,21 @@ namespace Lms.Api.Controllers
             return Ok(dto);
         }
 
-        // PUT: api/Modules/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+
+        /// <summary>
+        /// 
+        /// PUT: api/Modules/5
+        /// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// Put, update/replace, module
+        /// </summary>
+        /// <param name="id">id för den module som skall uppdateras</param>
+        /// <param name="moduleDto">Information om den module som skall uppdateras</param>
+        /// <returns>Om det gick bra returneras Ok = 200. 
+        /// Om id och moduledto ej har samma id returneras BadRequest = 400. 
+        /// Om ModelState ej är valid returneras BadRequest = 400.
+        /// Om module som skall uppdateras inte finns returneras NotFound = 404.
+        /// Om det inte gick uppdatera module returneras StatusCode = 500.
+        /// </returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutModule(int id, ModuleDto moduleDto)
         {
@@ -133,8 +169,16 @@ namespace Lms.Api.Controllers
             return Ok();
         }
 
-        // POST: api/Modules
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary> 
+        /// POST: api/Modules
+        /// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// Post, create, ny module
+        /// </summary>
+        /// <param name="moduleDto">Information om den module som skall skapas</param>
+        /// <returns>Om det gick bra sker det en redirect till GetModule action.
+        /// Om ModelState ej är valid returneras BadRequest = 400.
+        /// Om det inte gick att skapa module returneras StatusCode = 500
+        /// </returns>
         [HttpPost]
         public async Task<ActionResult<ModuleDto>> PostModule(ModuleDto moduleDto)
         {
@@ -156,7 +200,16 @@ namespace Lms.Api.Controllers
             return CreatedAtAction("GetModule", new { id = moduleDto.ModuleId }, moduleDto);
         }
 
-        // DELETE: api/Modules/5
+
+        /// <summary>
+        /// DELETE: api/Modules/5
+        /// DELETE, radera, en module
+        /// </summary>
+        /// <param name="id">id för den module som skall raderas</param>
+        /// <returns>Om det gick radera module returneras Ok = 200.
+        /// Om module inte finns returneras NotFound = 404.
+        /// Om det inte gick att radera module returneras StatusCode = 500.
+        /// </returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteModule(int id)
         {
@@ -180,6 +233,12 @@ namespace Lms.Api.Controllers
             return Ok();
         }
 
+
+        /// <summary>
+        /// Metoden testar om en module finns
+        /// </summary>
+        /// <param name="id">id för sökt module</param>
+        /// <returns>true om sökt module finns. Annars returneras false</returns>
         private async Task<bool> ModuleExists(int id)
         {
             bool bModuleExists = true;

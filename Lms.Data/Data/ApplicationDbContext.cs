@@ -2,6 +2,9 @@
 
 namespace Lms.Data.Data
 {
+    /// <summary>
+    /// Database context
+    /// </summary>
     public class ApplicationDbContext : DbContext
     {
         public ApplicationDbContext (DbContextOptions<ApplicationDbContext> options)

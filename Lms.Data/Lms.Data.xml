@@ -1,0 +1,200 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Lms.Data</name>
+    </assembly>
+    <members>
+        <member name="T:Lms.Data.Data.ApplicationDbContext">
+            <summary>
+            Database context
+            </summary>
+        </member>
+        <member name="T:Lms.Data.Data.MapperProfile">
+            <summary>
+            Automapper konfiguration
+            </summary>
+        </member>
+        <member name="M:Lms.Data.Data.MapperProfile.#ctor">
+            <summary>
+            Konstruktor
+            </summary>
+        </member>
+        <member name="T:Lms.Data.Data.SeedData">
+            <summary>
+            Klass för seed av data till databasen
+            </summary>
+        </member>
+        <member name="M:Lms.Data.Data.SeedData.InitSeedAsync(System.IServiceProvider)">
+            <summary>
+            Metoden seed data om course och models till databasen
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Lms.Data.Repositories.CourseRepository">
+            <summary>
+            CourseRepository med metoder för att spara, uppdatera och radera courses
+            </summary>
+        </member>
+        <member name="M:Lms.Data.Repositories.CourseRepository.#ctor(Lms.Data.Data.ApplicationDbContext)">
+            <summary>
+            Konstruktor
+            </summary>
+            <param name="context">Database context</param>
+        </member>
+        <member name="M:Lms.Data.Repositories.CourseRepository.AddAsync``1(``0)">
+            <summary>
+            Async metod som lägger till Course objekt
+            </summary>
+            <typeparam name="T">Course objekt</typeparam>
+            <param name="added">Course som skall skapas</param>
+            <returns></returns>
+        </member>
+        <member name="M:Lms.Data.Repositories.CourseRepository.GetAllCoursesAsync(System.Boolean)">
+            <summary>
+            Async metod som returnerar alla courses. Om includeModules = true returneras också modules som tillhör en course
+            </summary>
+            <param name="includeModules">true om en course även skall ha tillhörande modules. Annars false. Default false</param>
+            <returns>IEnumerable med courses</returns>
+        </member>
+        <member name="M:Lms.Data.Repositories.CourseRepository.GetAllCoursesAsync">
+            <summary>
+            Async metod som returnerar alla courses
+            </summary>
+            <returns>IEnumerable med alla courses</returns>
+        </member>
+        <member name="M:Lms.Data.Repositories.CourseRepository.GetCourseAsync(System.Nullable{System.Int32})">
+            <summary>
+            Async metod som returnera en sökt course
+            </summary>
+            <param name="Id">id för course som söks</param>
+            <exception cref="T:System.ArgumentException">Kastas om Id inte har något värde</exception>
+            <returns>Sökt course</returns>
+        </member>
+        <member name="M:Lms.Data.Repositories.CourseRepository.SaveAsync">
+            <summary>
+            Async metod som sparar ändringar
+            </summary>
+            <returns>true om några ändringar sparas. Annars returneras false</returns>
+        </member>
+        <member name="M:Lms.Data.Repositories.CourseRepository.DeleteAsync(System.Nullable{System.Int32})">
+            <summary>
+            Async metod som raderar en course
+            </summary>
+            <param name="id">id för den course som skall raderas</param>
+            <exception cref="T:System.ArgumentException">Kastas om id inte har något värde</exception>
+            <returns></returns>
+        </member>
+        <member name="M:Lms.Data.Repositories.CourseRepository.PutCourse(System.Int32,Lms.Core.Models.Entities.Course)">
+            <summary>
+            Metoden uppdaterar informationen om en course
+            </summary>
+            <param name="id">id för den course som skall uppdateras</param>
+            <param name="course">Course med data</param>
+            <exception cref="T:System.ArgumentException">Kastas om referensen till course objektet är null</exception>
+        </member>
+        <member name="T:Lms.Data.Repositories.ModuleRepository">
+            <summary>
+            ModuleRepository med metoder för att spara, uppdatera och radera modules
+            </summary>
+        </member>
+        <member name="M:Lms.Data.Repositories.ModuleRepository.#ctor(Lms.Data.Data.ApplicationDbContext)">
+            <summary>
+            Konstruktor
+            </summary>
+            <param name="context">Database context</param>
+        </member>
+        <member name="M:Lms.Data.Repositories.ModuleRepository.AddAsync``1(``0)">
+            <summary>
+            Async metod som lägger till Module
+            </summary>
+            <typeparam name="T">Module objekt</typeparam>
+            <param name="added">Module som skall skapas</param>
+            <returns></returns>
+        </member>
+        <member name="M:Lms.Data.Repositories.ModuleRepository.DeleteAsync(System.Nullable{System.Int32})">
+            <summary>
+            Async metod som raderar en Module
+            </summary>
+            <param name="id">id för module som skall raderas</param>
+            <exception cref="T:System.ArgumentException">Kastas om id inte har något värde</exception>
+            <returns></returns>
+        </member>
+        <member name="M:Lms.Data.Repositories.ModuleRepository.GetAllModulesBelongingToACourseAsync(System.Nullable{System.Int32})">
+            <summary>
+            Async metod som returnerar alla modules som tillhör en course
+            </summary>
+            <param name="courseId">id för den course som vi söker modules för</param>
+            <exception cref="T:System.ArgumentException">Kastas om courseId inte har något värde</exception>
+            <returns>IEnumerable med modules som tillhör en course</returns>
+        </member>
+        <member name="M:Lms.Data.Repositories.ModuleRepository.GetAllModulesAsync">
+            <summary>
+            Async metod som returnerar alla Modules
+            </summary>
+            <returns>IEnumerable med modules</returns>
+        </member>
+        <member name="M:Lms.Data.Repositories.ModuleRepository.GetModuleAsync(System.Nullable{System.Int32})">
+            <summary>
+            Async metod som returnerar sökt module
+            </summary>
+            <param name="Id">id för sökt module</param>
+            <exception cref="T:System.ArgumentException">Kastas om Id inte har något värde</exception>
+            <returns>Sökt modul</returns>
+        </member>
+        <member name="M:Lms.Data.Repositories.ModuleRepository.GetModuleAsync(System.String)">
+            <summary>
+            Async metod som returnerar en model med sökt titel
+            </summary>
+            <param name="title">Sökt titel</param>
+            <exception cref="T:System.ArgumentException">Kastas om titel är null eller en tom sträng</exception>
+            <returns>Sökte model</returns>
+        </member>
+        <member name="M:Lms.Data.Repositories.ModuleRepository.PutModule(System.Int32,Lms.Core.Models.Entities.Module)">
+            <summary>
+            Metoden uppdaterar en module
+            </summary>
+            <param name="id">id för den module som skall uppdateras</param>
+            <param name="module">Module med information</param>
+            <exception cref="T:System.ArgumentException">Kastas om referensen till Module är null</exception>
+        </member>
+        <member name="M:Lms.Data.Repositories.ModuleRepository.SaveAsync">
+            <summary>
+            Async metod som sparar uppdateringar
+            </summary>
+            <returns>true om det sparades några uppdateringar. Annars returneras false</returns>
+        </member>
+        <member name="T:Lms.Data.Repositories.UnitOfWork">
+            <summary>
+            Unit of work med properties för att anropa repository
+            </summary>
+        </member>
+        <member name="F:Lms.Data.Repositories.UnitOfWork.m_dbContext">
+            <summary>
+            Private field for database context
+            </summary>
+        </member>
+        <member name="P:Lms.Data.Repositories.UnitOfWork.CourseRepository">
+            <summary>
+            CourseRepository
+            </summary>
+        </member>
+        <member name="P:Lms.Data.Repositories.UnitOfWork.ModuleRepository">
+            <summary>
+            ModuleRepository
+            </summary>
+        </member>
+        <member name="M:Lms.Data.Repositories.UnitOfWork.#ctor(Lms.Data.Data.ApplicationDbContext)">
+            <summary>
+            Konstruktor
+            </summary>
+            <param name="dbContext">Context</param>
+        </member>
+        <member name="M:Lms.Data.Repositories.UnitOfWork.CompleteAsync">
+            <summary>
+            Metod som sparar uppdaterad data i CourseRepository och ModuleRepository
+            </summary>
+            <returns>Task</returns>
+        </member>
+    </members>
+</doc>

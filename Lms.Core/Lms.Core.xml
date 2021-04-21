@@ -1,0 +1,250 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Lms.Core</name>
+    </assembly>
+    <members>
+        <member name="T:Lms.Core.Dto.CourseDto">
+            <summary>
+            Information om course data
+            </summary>
+        </member>
+        <member name="P:Lms.Core.Dto.CourseDto.CourseId">
+            <summary>
+            Course id
+            </summary>
+        </member>
+        <member name="P:Lms.Core.Dto.CourseDto.Title">
+            <summary>
+            Course title
+            </summary>
+        </member>
+        <member name="P:Lms.Core.Dto.CourseDto.StartDate">
+            <summary>
+            Course start datum
+            </summary>
+        </member>
+        <member name="P:Lms.Core.Dto.CourseDto.EndDate">
+            <summary>
+            Course slut datum dvs start datum plus 3 månader
+            </summary>
+        </member>
+        <member name="T:Lms.Core.Dto.ModuleDto">
+            <summary>
+            Information om module data
+            </summary>
+        </member>
+        <member name="P:Lms.Core.Dto.ModuleDto.ModuleId">
+            <summary>
+            Module id
+            </summary>
+        </member>
+        <member name="P:Lms.Core.Dto.ModuleDto.Title">
+            <summary>
+            Module title
+            </summary>
+        </member>
+        <member name="P:Lms.Core.Dto.ModuleDto.StartDate">
+            <summary>
+            Module start datum
+            </summary>
+        </member>
+        <member name="P:Lms.Core.Dto.ModuleDto.EndDate">
+            <summary>
+            Module slut datum dvs start datum plus 1 månad
+            </summary>
+        </member>
+        <member name="T:Lms.Core.Models.Entities.Course">
+            <summary>
+            Course entity
+            </summary>
+        </member>
+        <member name="P:Lms.Core.Models.Entities.Course.CourseId">
+            <summary>
+            Course id. Primary key
+            </summary>
+        </member>
+        <member name="P:Lms.Core.Models.Entities.Course.Title">
+            <summary>
+            Course title
+            </summary>
+        </member>
+        <member name="P:Lms.Core.Models.Entities.Course.StartDate">
+            <summary>
+            Course start datum
+            </summary>
+        </member>
+        <member name="P:Lms.Core.Models.Entities.Course.Modules">
+            <summary>
+            Course modules
+            </summary>
+        </member>
+        <member name="T:Lms.Core.Models.Entities.Module">
+            <summary>
+            Module entity
+            </summary>
+        </member>
+        <member name="P:Lms.Core.Models.Entities.Module.Id">
+            <summary>
+            Module id. Primary key
+            </summary>
+        </member>
+        <member name="P:Lms.Core.Models.Entities.Module.Title">
+            <summary>
+            Module title
+            </summary>
+        </member>
+        <member name="P:Lms.Core.Models.Entities.Module.StartDate">
+            <summary>
+            Module start datum
+            </summary>
+        </member>
+        <member name="P:Lms.Core.Models.Entities.Module.CourseId">
+            <summary>
+            Id för den course som module tillhör
+            </summary>
+        </member>
+        <member name="T:Lms.Core.Repositories.ICourseRepository">
+            <summary>
+            Interface för CourseRepository
+            </summary>
+        </member>
+        <member name="M:Lms.Core.Repositories.ICourseRepository.GetAllCoursesAsync(System.Boolean)">
+            <summary>
+            Async metod som returnerar alla courses. Om includeModules = true returneras också modules som tillhör en course
+            </summary>
+            <param name="includeModules">true om en course även skall ha tillhörande modules. Annars false. Default false</param>
+            <returns>IEnumerable med courses</returns>
+        </member>
+        <member name="M:Lms.Core.Repositories.ICourseRepository.GetAllCoursesAsync">
+            <summary>
+            Async metod som returnerar alla courses
+            </summary>
+            <returns>IEnumerable med alla courses</returns>
+        </member>
+        <member name="M:Lms.Core.Repositories.ICourseRepository.GetCourseAsync(System.Nullable{System.Int32})">
+            <summary>
+            Async metod som returnera en sökt course
+            </summary>
+            <param name="Id">id för course som söks</param>
+            <exception cref="!:ArgumentException">Kastas om Id inte har något värde</exception>
+            <returns>Sökt course</returns>
+        </member>
+        <member name="M:Lms.Core.Repositories.ICourseRepository.SaveAsync">
+            <summary>
+            Async metod som sparar ändringar
+            </summary>
+            <returns>true om några ändringar sparas. Annars returneras false</returns>
+        </member>
+        <member name="M:Lms.Core.Repositories.ICourseRepository.AddAsync``1(``0)">
+            <summary>
+            Async metod som lägger till Course objekt
+            </summary>
+            <typeparam name="T">Course objekt</typeparam>
+            <param name="added">Course som skall skapas</param>
+            <returns></returns>
+        </member>
+        <member name="M:Lms.Core.Repositories.ICourseRepository.DeleteAsync(System.Nullable{System.Int32})">
+            <summary>
+            Async metod som raderar en course
+            </summary>
+            <param name="id">id för den course som skall raderas</param>
+            <exception cref="!:ArgumentException">Kastas om id inte har något värde</exception>
+            <returns></returns>
+        </member>
+        <member name="M:Lms.Core.Repositories.ICourseRepository.PutCourse(System.Int32,Lms.Core.Models.Entities.Course)">
+            <summary>
+            Metoden uppdaterar informationen om en course
+            </summary>
+            <param name="id">id för den course som skall uppdateras</param>
+            <param name="course">Course med data</param>
+            <exception cref="!:ArgumentException">Kastas om referensen till course objektet är null</exception>
+        </member>
+        <member name="T:Lms.Core.Repositories.IModuleRepository">
+            <summary>
+            Interface för ModuleRepository
+            </summary>
+        </member>
+        <member name="M:Lms.Core.Repositories.IModuleRepository.GetAllModulesBelongingToACourseAsync(System.Nullable{System.Int32})">
+            <summary>
+            Async metod som returnerar alla modules som tillhör en course
+            </summary>
+            <param name="courseId">id för den course som vi söker modules för</param>
+            <exception cref="!:ArgumentException">Kastas om courseId inte har något värde</exception>
+            <returns>IEnumerable med modules som tillhör en course</returns>
+        </member>
+        <member name="M:Lms.Core.Repositories.IModuleRepository.GetAllModulesAsync">
+            <summary>
+            Async metod som returnerar alla Modules
+            </summary>
+            <returns>IEnumerable med modules</returns>
+        </member>
+        <member name="M:Lms.Core.Repositories.IModuleRepository.GetModuleAsync(System.Nullable{System.Int32})">
+            <summary>
+            Async metod som returnerar sökt module
+            </summary>
+            <param name="Id">id för sökt module</param>
+            <exception cref="!:ArgumentException">Kastas om Id inte har något värde</exception>
+            <returns>Sökt modul</returns>
+        </member>
+        <member name="M:Lms.Core.Repositories.IModuleRepository.GetModuleAsync(System.String)">
+            <summary>
+            Async metod som returnerar en model med sökt titel
+            </summary>
+            <param name="title">Sökt titel</param>
+            <exception cref="!:ArgumentException">Kastas om titel är null eller en tom sträng</exception>
+            <returns>Sökte model</returns>
+        </member>
+        <member name="M:Lms.Core.Repositories.IModuleRepository.SaveAsync">
+            <summary>
+            Async metod som sparar uppdateringar
+            </summary>
+            <returns>true om det sparades några uppdateringar. Annars returneras false</returns>
+        </member>
+        <member name="M:Lms.Core.Repositories.IModuleRepository.AddAsync``1(``0)">
+            <summary>
+            Async metod som lägger till Module
+            </summary>
+            <typeparam name="T">Module objekt</typeparam>
+            <param name="added">Module som skall skapas</param>
+            <returns></returns>
+        </member>
+        <member name="M:Lms.Core.Repositories.IModuleRepository.DeleteAsync(System.Nullable{System.Int32})">
+            <summary>
+            Async metod som raderar en Module
+            </summary>
+            <param name="id">id för module som skall raderas</param>
+            <exception cref="!:ArgumentException">Kastas om id inte har något värde</exception>
+            <returns></returns>
+        </member>
+        <member name="M:Lms.Core.Repositories.IModuleRepository.PutModule(System.Int32,Lms.Core.Models.Entities.Module)">
+            <summary>
+            Metoden uppdaterar en module
+            </summary>
+            <param name="id">id för den module som skall uppdateras</param>
+            <param name="module">Module med information</param>
+            <exception cref="!:ArgumentException">Kastas om referensen till Module är null</exception>
+        </member>
+        <member name="T:Lms.Core.Repositories.IUnitOfWork">
+            <summary>
+            Interface för Unit of work objektet
+            </summary>
+        </member>
+        <member name="P:Lms.Core.Repositories.IUnitOfWork.CourseRepository">
+            <summary>
+            CourseRepository
+            </summary>
+        </member>
+        <member name="P:Lms.Core.Repositories.IUnitOfWork.ModuleRepository">
+            <summary>
+            ModuleRepository
+            </summary>
+        </member>
+        <member name="M:Lms.Core.Repositories.IUnitOfWork.CompleteAsync">
+            <summary>
+            Metod som sparar uppdaterad data i CourseRepository och ModuleRepository
+            </summary>
+            <returns>Task</returns>
+        </member>
+    </members>
+</doc>
