@@ -17,6 +17,7 @@
             </summary>
             <param name="includeModules">true om courses även skall innehålla modules. Annars false. Default false</param>
             <returns>Ok = 200 och en lista med courses</returns>
+            <response code="200">Returnerade lista med courses</response>
         </member>
         <member name="M:Lms.Api.Controllers.CoursesController.GetCourse(System.Int32)">
             <summary>
@@ -25,6 +26,8 @@
             </summary>
             <param name="id">id för sökt course</param>
             <returns>Ok = 200 och sökt course eller NotFound = 404</returns>
+            <response code="200">Returnerade sökt course</response>
+            <response code="404">Hittade inte sökt course</response>
         </member>
         <member name="M:Lms.Api.Controllers.CoursesController.PutCourseAsync(System.Int32,Lms.Core.Dto.CourseDto)">
             <summary>
@@ -40,6 +43,10 @@
             Om course som skall uppdateras inte finns returneras NotFound = 404.
             Om det inte gick uppdatera course returneras StatusCode = 500
             </returns>
+            <response code="200">Uppdatering av course gick bra</response>
+            <response code="400">Id och course id är inte samma eller ModelState isn't valid</response>
+            <response code="404">Course som skall uppdateras finns ej</response>
+            <response code="500">Det gick inte uppdatera informationen om course</response>
         </member>
         <member name="M:Lms.Api.Controllers.CoursesController.PostCourse(Lms.Core.Dto.CourseDto)">
             <summary>
@@ -52,6 +59,8 @@
             Om ModelState ej är valid returneras BadRequest = 400.
             Om det inte gick att skapa course returneras StatusCode = 500
             </returns>
+            <response code="400">ModelState isn't valid</response>
+            <response code="500">Det gick inte skapa course</response>
         </member>
         <member name="M:Lms.Api.Controllers.CoursesController.DeleteCourse(System.Int32)">
             <summary>
@@ -63,6 +72,9 @@
             Om course som skall raderas inte finns returneras NotFound = 404.
             Om det inte gick att skapa course returneras StatusCode = 500.
             </returns>
+            <response code="200">Course är raderad</response>
+            <response code="404">Course som skall uppdateras finns ej</response>
+            <response code="500">Det gick inte radera course</response>
         </member>
         <member name="M:Lms.Api.Controllers.CoursesController.CourseExistsAsync(System.Int32)">
             <summary>
@@ -93,6 +105,10 @@
                 } \
             ]
             </remarks>
+            <response code="200">Uppdatering av course gick bra</response>
+            <response code="400">ModelState isn't valid</response>
+            <response code="404">Course som skall uppdateras finns ej</response>
+            <response code="500">Det gick inte uppdatera informationen om course</response>
         </member>
         <member name="M:Lms.Api.Controllers.ModulesController.#ctor(Lms.Core.Repositories.IUnitOfWork,AutoMapper.IMapper)">
             <summary>
@@ -107,6 +123,7 @@
             Get alla modules
             </summary>
             <returns>Ok = 200 och en lista med modules</returns>
+            <response code="200">Returnerade lista med modules</response>
         </member>
         <member name="M:Lms.Api.Controllers.ModulesController.GetModuleById(System.Int32)">
             <summary>
@@ -115,6 +132,8 @@
             </summary>
             <param name="id">id för sökt module</param>
             <returns>Ok = 200 och sökt module eller NotFound = 404</returns>
+            <response code="200">Returnerade sökt module</response>
+            <response code="404">Sökt module finns inte</response>
         </member>
         <member name="M:Lms.Api.Controllers.ModulesController.GetModule(System.String)">
             <summary>
@@ -123,6 +142,8 @@
             </summary>
             <param name="title">titel för sökt module</param>
             <returns>Ok = 200 och sökt module eller NotFound = 404</returns>
+            <response code="200">Returnerar sökt module</response>
+            <response code="404">Sökt module finns inte</response>
         </member>
         <member name="M:Lms.Api.Controllers.ModulesController.PutModule(System.Int32,Lms.Core.Dto.ModuleDto)">
             <summary>
@@ -139,6 +160,10 @@
             Om module som skall uppdateras inte finns returneras NotFound = 404.
             Om det inte gick uppdatera module returneras StatusCode = 500.
             </returns>
+            <response code="200">Uppdatering av module gick bra</response>
+            <response code="400">Id och module id är inte samma eller ModelState isn't valid</response>
+            <response code="404">Module som skall uppdateras finns ej</response>
+            <response code="500">Det gick inte uppdatera informationen om Module</response>
         </member>
         <member name="M:Lms.Api.Controllers.ModulesController.PostModule(Lms.Core.Dto.ModuleDto)">
             <summary> 
@@ -151,6 +176,8 @@
             Om ModelState ej är valid returneras BadRequest = 400.
             Om det inte gick att skapa module returneras StatusCode = 500
             </returns>
+            <response code="400">ModelState isn't valid</response>
+            <response code="500">Det gick inte skapa en ny model</response>
         </member>
         <member name="M:Lms.Api.Controllers.ModulesController.DeleteModule(System.Int32)">
             <summary>
@@ -162,6 +189,9 @@
             Om module inte finns returneras NotFound = 404.
             Om det inte gick att radera module returneras StatusCode = 500.
             </returns>
+            <response code="200">Raderade module</response>
+            <response code="404">Module finns inte</response>
+            <response code="500">Det gick inte radera module</response>
         </member>
         <member name="M:Lms.Api.Controllers.ModulesController.ModuleExists(System.Int32)">
             <summary>

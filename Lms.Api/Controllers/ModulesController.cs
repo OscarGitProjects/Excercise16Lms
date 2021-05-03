@@ -2,6 +2,7 @@
 using Lms.Core.Dto;
 using Lms.Core.Models.Entities;
 using Lms.Core.Repositories;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -10,8 +11,11 @@ using System.Threading.Tasks;
 
 namespace Lms.Api.Controllers
 {
+    [Produces("application/json", "application/xml")]
     [Route("api/[controller]")]
     [ApiController]
+    //[ApiVersion("2.0")]
+    //[Route("api/v{version:apiVersion}/modules")]
     public class ModulesController : ControllerBase
     {
         //private readonly ApplicationDbContext _context;
@@ -38,6 +42,8 @@ namespace Lms.Api.Controllers
         /// Get alla modules
         /// </summary>
         /// <returns>Ok = 200 och en lista med modules</returns>
+        /// <response code="200">Returnerade lista med modules</response>
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ModuleDto))]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ModuleDto>>> GetModules()
         {
@@ -67,6 +73,10 @@ namespace Lms.Api.Controllers
         /// </summary>
         /// <param name="id">id för sökt module</param>
         /// <returns>Ok = 200 och sökt module eller NotFound = 404</returns>
+        /// <response code="200">Returnerade sökt module</response>
+        /// <response code="404">Sökt module finns inte</response>
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ModuleDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpGet("{id:int}")]
         public async Task<ActionResult<ModuleDto>> GetModuleById(int id)
         {
@@ -93,6 +103,10 @@ namespace Lms.Api.Controllers
         /// </summary>
         /// <param name="title">titel för sökt module</param>
         /// <returns>Ok = 200 och sökt module eller NotFound = 404</returns>
+        /// <response code="200">Returnerar sökt module</response>
+        /// <response code="404">Sökt module finns inte</response>
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ModuleDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpGet("{title}")]
         public async Task<ActionResult<ModuleDto>> GetModule(string title)
         {
@@ -127,6 +141,14 @@ namespace Lms.Api.Controllers
         /// Om module som skall uppdateras inte finns returneras NotFound = 404.
         /// Om det inte gick uppdatera module returneras StatusCode = 500.
         /// </returns>
+        /// <response code="200">Uppdatering av module gick bra</response>
+        /// <response code="400">Id och module id är inte samma eller ModelState isn't valid</response>
+        /// <response code="404">Module som skall uppdateras finns ej</response>
+        /// <response code="500">Det gick inte uppdatera informationen om Module</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutModule(int id, ModuleDto moduleDto)
         {
@@ -179,6 +201,11 @@ namespace Lms.Api.Controllers
         /// Om ModelState ej är valid returneras BadRequest = 400.
         /// Om det inte gick att skapa module returneras StatusCode = 500
         /// </returns>
+        /// <response code="400">ModelState isn't valid</response>
+        /// <response code="500">Det gick inte skapa en ny model</response>
+        [Consumes("application/json")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]        
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpPost]
         public async Task<ActionResult<ModuleDto>> PostModule(ModuleDto moduleDto)
         {
@@ -210,6 +237,12 @@ namespace Lms.Api.Controllers
         /// Om module inte finns returneras NotFound = 404.
         /// Om det inte gick att radera module returneras StatusCode = 500.
         /// </returns>
+        /// <response code="200">Raderade module</response>
+        /// <response code="404">Module finns inte</response>
+        /// <response code="500">Det gick inte radera module</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteModule(int id)
         {

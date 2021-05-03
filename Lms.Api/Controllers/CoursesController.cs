@@ -2,6 +2,7 @@
 using Lms.Core.Dto;
 using Lms.Core.Models.Entities;
 using Lms.Core.Repositories;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,8 +12,11 @@ using System.Threading.Tasks;
 
 namespace Lms.Api.Controllers
 {
+    [Produces("application/json", "application/xml")]
     [Route("api/[controller]")]
     [ApiController]
+    //[ApiVersion("1.0")]
+//    [Route("api/v{version:apiVersion}/courses")]
     public class CoursesController : ControllerBase
     {
         // private readonly ApplicationDbContext _context;
@@ -60,6 +64,8 @@ namespace Lms.Api.Controllers
         /// </summary>
         /// <param name="includeModules">true om courses även skall innehålla modules. Annars false. Default false</param>
         /// <returns>Ok = 200 och en lista med courses</returns>
+        /// <response code="200">Returnerade lista med courses</response>
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CourseDto))]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CourseDto>>> GetCourses([FromQuery]bool includeModules = false)
         {
@@ -88,6 +94,10 @@ namespace Lms.Api.Controllers
         /// </summary>
         /// <param name="id">id för sökt course</param>
         /// <returns>Ok = 200 och sökt course eller NotFound = 404</returns>
+        /// <response code="200">Returnerade sökt course</response>
+        /// <response code="404">Hittade inte sökt course</response>
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CourseDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpGet("{id}")]
         public async Task<ActionResult<CourseDto>> GetCourse(int id)
         {
@@ -120,6 +130,14 @@ namespace Lms.Api.Controllers
         /// Om course som skall uppdateras inte finns returneras NotFound = 404.
         /// Om det inte gick uppdatera course returneras StatusCode = 500
         /// </returns>
+        /// <response code="200">Uppdatering av course gick bra</response>
+        /// <response code="400">Id och course id är inte samma eller ModelState isn't valid</response>
+        /// <response code="404">Course som skall uppdateras finns ej</response>
+        /// <response code="500">Det gick inte uppdatera informationen om course</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCourseAsync(int id, CourseDto courseDto)
         {
@@ -172,6 +190,11 @@ namespace Lms.Api.Controllers
         /// Om ModelState ej är valid returneras BadRequest = 400.
         /// Om det inte gick att skapa course returneras StatusCode = 500
         /// </returns>
+        /// <response code="400">ModelState isn't valid</response>
+        /// <response code="500">Det gick inte skapa course</response>
+        [Consumes("application/json")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpPost]
         public async Task<ActionResult<CourseDto>> PostCourse(CourseDto courseDto)
         {
@@ -204,6 +227,12 @@ namespace Lms.Api.Controllers
         /// Om course som skall raderas inte finns returneras NotFound = 404.
         /// Om det inte gick att skapa course returneras StatusCode = 500.
         /// </returns>
+        /// <response code="200">Course är raderad</response>
+        /// <response code="404">Course som skall uppdateras finns ej</response>
+        /// <response code="500">Det gick inte radera course</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCourse(int id)
         {
@@ -266,6 +295,14 @@ namespace Lms.Api.Controllers
         ///     } \
         /// ]
         /// </remarks>
+        /// <response code="200">Uppdatering av course gick bra</response>
+        /// <response code="400">ModelState isn't valid</response>
+        /// <response code="404">Course som skall uppdateras finns ej</response>
+        /// <response code="500">Det gick inte uppdatera informationen om course</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpPatch("{courseId}")]
         public async Task<ActionResult<CourseDto>> PatchCourse(int courseId, JsonPatchDocument<CourseDto> patchDocument)
         {

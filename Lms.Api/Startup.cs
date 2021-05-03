@@ -90,7 +90,13 @@ namespace Lms.Api
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Lms.Api v1.0"));
+                app.UseSwaggerUI(c => 
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Lms.Api v1.0");
+                    //c.RoutePrefix = "";
+                    c.EnableDeepLinking();
+                    c.DisplayOperationId();
+                });
             }
             else
             {
